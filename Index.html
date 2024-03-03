@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Single Page Web App</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+    body {
+        font-family: 'Space Mono', monospace;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .menu {
+        display: flex;
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .menu-item {
+        padding: 10px 20px;
+        background-color: #f0f0f0;
+        margin: 0 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .menu-item:hover {
+        background-color: #ccc;
+    }
+</style>
+</head>
+<body>
+
+<ul class="menu">
+    <li class="menu-item">Home</li>
+    <li class="menu-item">About</li>
+    <li class="menu-item">Services</li>
+    <li class="menu-item">Contact</li>
+</ul>
+
+<script>
+    // Example of inline JavaScript - change menu item background color on click
+    document.querySelectorAll('.menu-item').forEach(item => {
+        item.addEventListener('click', () => {
+            // Remove active class from all items
+            document.querySelectorAll('.menu-item').forEach(i => i.style.backgroundColor = '#f0f0f0');
+            // Add active class to clicked item
+            item.style.backgroundColor = '#ddd';
+        });
+    });
+</script>
+
+</body>
+</html>
