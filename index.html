@@ -177,108 +177,8 @@
 
 <div id='overlay' class="panel-overlay">
     <div class="panel-content">
-        <div id="title" class="panel-title">Your Title Here</div>
-        <div class="content-area">
-            <pre>
-The girl looks through clear eyes,
-sees sky blue, cloud white.
-Fields of green stretching far.
-From trees, birds take flight.
-
-The boy wakes, refreshed, 
-to diode white, concrete gray.
-Lights brighten
-the city below, a mile away.
-
-The girl doesn’t know
-that under soil and grass, 
-three meters thick is a layer 
-of metal, concrete, and glass.
-
-The boy doesn’t know
-that above city and street
-three meters thick is a layer
-of metal, glass, and concrete
-
-Long before they were born.
-A time remembered by few.
-There was only city,
-nothing left of the world that once grew.
-
-Generations who knew only, 
-smog black, rust red
-The world, consumed.
-Life dead.
-
-But some gathered and planned,
-the great minds of an age.
-In the tall roofs of the world city
-found a solution, did they.
-
-One thousand years of lost progress.
-A labor of love.
-They’d give to those yet to live,
-a place for nature, high above.
-
-They would slowly cut off,
-the light of the day.
-The city; the stew.
-Nature; tucked away.
-
-Some would remain on the roofs
-in the natural spaces above.
-Stewards, shepherds, in name;
-powerful, wealthy; hand in glove.
-
-They cultivated great fields
-of grass and nurtured trees.
-Branches up to the sky;
-city’s locks, nature’s keys.
-
-They manufactured great fields
-of screens and huge lights.
-Branching down from the sky,
-not trees, stalactites.
-
-Most would remain in the city
-on streets far below
-Laborers, builders, in name;
-saviors, heroes; status quo.
-
-Cameras up, sky saved.
-Screens down, sky reset.
-Glass copy so real,
-Soon all would forget
-
-that it wasn’t the sun in the sky,
-bright, to wake them from sleep.
-That it wasn’t the sky,
-blue, through which clouds sweep.
-That it wasn’t the clouds, 
-white, in whose company birds keep.
-That it wasn’t the birds,
-content, who soared high but dove steep
-Instead, a sky message.
-Recorded.
-And sent to the deep.
-
-Fast forward many years,
-decades, centuries.
-Ever so slowly, above filled.
-Lights and screens, grass and trees.
-
-The boy doesn’t know,
-morning lit by progress’ flame,
-that the city’s final victim,
-the sky, is a sky only in name.
-
-The girl doesn’t know,
-her hand brushing green grass,
-that there’s a boy, far below,
-who looks up and sees glass.
-            </pre>
-            <!-- Scrollable content goes here -->
-        </div>
+        <div id="title" class="panel-title"></div>
+        <div class="content-area"></div>
     </div>
 </div>
 
@@ -292,6 +192,12 @@ who looks up and sees glass.
     })
     .then(data => {
         // Here you can use the `data` object which is the JSON content
+        console.log(data);
+
+
+
+
+
         return data;
         // You can process your data here
     })
@@ -300,7 +206,6 @@ who looks up and sees glass.
         console.error("There was a problem fetching the test.json file:", error);
     });
 
-    console.log(site_content);
 
     document.addEventListener('click', () => {
         document.querySelectorAll('.dropdown.complete').forEach(item => {item.style.backgroundColor = '#FFFFFF';});
