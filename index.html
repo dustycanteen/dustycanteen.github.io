@@ -283,9 +283,7 @@ who looks up and sees glass.
 </div>
 
 <script>
-
-    fetch('test.json')
-    .then(response => {
+    let site_content = fetch('test.json').then(response => {
         // Check if the request was successful
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -294,14 +292,16 @@ who looks up and sees glass.
     })
     .then(data => {
         // Here you can use the `data` object which is the JSON content
-        console.log(data);
+        return data;
         // You can process your data here
     })
     .catch(error => {
         // If there's an error with the fetch operation or parsing JSON, it ends up here
-        console.error('There was a problem fetching the test.json file:', error);
+        console.error("There was a problem fetching the test.json file:", error);
     });
-    
+
+    console.log(site_content);
+
     document.addEventListener('click', () => {
         document.querySelectorAll('.dropdown.complete').forEach(item => {item.style.backgroundColor = '#FFFFFF';});
         document.getElementById('overlay').style.display = 'none';
