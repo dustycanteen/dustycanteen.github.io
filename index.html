@@ -16,48 +16,311 @@
         margin: 0;
     }
 
+    .nohighlight {
+        -webkit-user-select: none; /* Safari */
+        -moz-user-select: none;    /* Firefox */
+        -ms-user-select: none;     /* Internet Explorer/Edge */
+        user-select: none;         /* Non-prefixed version, currently supported by Chrome, Opera, and Edge */
+    }
+
     .menu {
         display: flex;
         list-style-type: none;
         padding: 0;
     }
 
-    .menu-item {
-        padding: 10px 20px;
-        background-color: #f0f0f0;
+    .label {
+        display: flex;
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .menu-item .label {
+        padding: 30px 80px;
         font-size: 24px;
         margin: 0 24px;
         cursor: pointer;
-        transition: background-color 0.3s ease;
+        transition: background-color 0.5s ease, font-size 0.5s ease;
+        transition-delay:  0.1s, 0.1s;
     }
 
-    .menu-item:hover {
-        background-color: #ccc;
-        font-size: 36px;
+    .menu-item:hover .label {
+        font-size: 48px;
         margin: 0 12px;
     }
+
+    .dropdown {
+         /* Use visibility and opacity for the transition instead of display */
+        visibility: hidden; /* Hide the dropdown */
+        opacity: 0; /* Make the dropdown fully transparent */
+        font-size: 0; /* Start with a font size of 0 */
+        transition: visibility 1.5s, opacity 1.5s ease, font-size 1.5s ease;
+        transition-delay: 0s, 0s, 0s; /* Apply no delay to start transitions immediately */
+    }
+
+    .menu-item:hover .dropdown{
+        list-style-type: none;
+        visibility: visible; /* Make the dropdown visible */
+        opacity: 1; /* Fade in the dropdown */
+        font-size: 18px; /* Transition to font size of 18px */
+        transition-delay: 0s, 0s, 0s; /* Adjust delays if needed */
+        background-color: #ffffffff;
+        padding-top: 20px;
+    }
+
+    /* Overlay Panel Styles */
+    .panel-overlay {
+        position: fixed; /* Sit on top of the page content */
+        display: none; /* Hidden by default */
+        width: 80%; /* Full width */
+        height: 100%; /* Full height */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #00000000;
+        z-index: 2; /* Sit on top */
+        cursor: pointer;
+    }
+
+    .panel-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%; /* Adjusted for example */
+        height: 100%; /* Adjusted for example */
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 10px;
+        text-align: center;
+        box-sizing: border-box; /* Ensures padding is included in width/height calculations */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .panel-title {
+        width: 80%; /* Span 80% of the parent's width */
+        margin: 0 auto 10px; /* Center the title div, with space at the bottom */
+        border-bottom: 2px solid #ddd; /* Bottom border */
+        text-align: center; /* Center the text */
+        font-size: 24px;
+        padding: 10px 0; /* Padding above and below the text */
+        box-sizing: border-box; /* Include padding and border in the element's total dimensions */
+    }
+
+    .content-area {
+        overflow-y: auto; /* Adds a scrollbar if content exceeds the area's height */
+        flex-grow: 1; /* Takes up the remaining space in the flex container */
+        background-color:rgba(255, 255, 255, 0.3);
+        margin-top: 40px;
+    }
+
 </style>
 </head>
 <body>
 
 <ul class="menu">
-    <li class="menu-item">Code</li>
-    <li class="menu-item">Poetry</li>
-    <li class="menu-item">Stories</li>
-    <li class="menu-item">Games</li>
-    <li class="menu-item">Contact</li>
+    <li class="menu-item nohighlight">
+        <ul class="label">
+            <li>Code</li>
+        </ul>
+        <ul class="dropdown wip repo">
+            <li>Continuing Eduction</li>
+        </ul>
+    </li>
+    <li class="menu-item nohighlight">
+        <ul class="label">
+            <li>Poetry</li>
+        </ul>
+        <ul class="dropdown complete">
+            <li>Garden in the Clouds</li>
+        </ul>
+        <ul class="dropdown complete">
+            <li>The Chimney</li>
+        </ul>
+    </li>
+    <li class="menu-item nohighlight">
+        <ul class="label">
+            <li>Stories</li>
+        </ul>
+        <ul class="dropdown complete flash-fiction">
+            <li>Decay</li>
+        </ul>
+        <ul class="dropdown wip short-story">
+            <li>A Lesson in Materials Science</li>
+        </ul>
+    </li>
+    <li class="menu-item nohighlight">
+        <ul class="label">
+            <li>Games</li>
+        </ul>
+        <ul class="dropdown wip project">
+            <li>
+                Cubeworld RTS
+            </li>
+        </ul>
+    </li>
+    <li class="menu-item nohighlight">
+        <ul class="label">
+            <li>Contact</li>
+        </ul>
+        <ul class="dropdown contact">
+            <li>Ruy Calderon</li>
+        </ul>
+        <ul class="dropdown contact">
+            <li>ruy.calderon@gmail.com</li>
+        </ul>
+        <ul class="dropdown contact">
+            <li>dustycanteen@gmail.com</li>
+        </ul>
+    </li>
 </ul>
 
+<div id='overlay' class="panel-overlay">
+    <div class="panel-content">
+        <div id="title" class="panel-title">Your Title Here</div>
+        <div class="content-area">
+            <pre>
+The girl looks through clear eyes,
+sees sky blue, cloud white.
+Fields of green stretching far.
+From trees, birds take flight.
+
+The boy wakes, refreshed, 
+to diode white, concrete gray.
+Lights brighten
+the city below, a mile away.
+
+The girl doesn’t know
+that under soil and grass, 
+three meters thick is a layer 
+of metal, concrete, and glass.
+
+The boy doesn’t know
+that above city and street
+three meters thick is a layer
+of metal, glass, and concrete
+
+Long before they were born.
+A time remembered by few.
+There was only city,
+nothing left of the world that once grew.
+
+Generations who knew only, 
+smog black, rust red
+The world, consumed.
+Life dead.
+
+But some gathered and planned,
+the great minds of an age.
+In the tall roofs of the world city
+found a solution, did they.
+
+One thousand years of lost progress.
+A labor of love.
+They’d give to those yet to live,
+a place for nature, high above.
+
+They would slowly cut off,
+the light of the day.
+The city; the stew.
+Nature; tucked away.
+
+Some would remain on the roofs
+in the natural spaces above.
+Stewards, shepherds, in name;
+powerful, wealthy; hand in glove.
+
+They cultivated great fields
+of grass and nurtured trees.
+Branches up to the sky;
+city’s locks, nature’s keys.
+
+They manufactured great fields
+of screens and huge lights.
+Branching down from the sky,
+not trees, stalactites.
+
+Most would remain in the city
+on streets far below
+Laborers, builders, in name;
+saviors, heroes; status quo.
+
+Cameras up, sky saved.
+Screens down, sky reset.
+Glass copy so real,
+Soon all would forget
+
+that it wasn’t the sun in the sky,
+bright, to wake them from sleep.
+That it wasn’t the sky,
+blue, through which clouds sweep.
+That it wasn’t the clouds, 
+white, in whose company birds keep.
+That it wasn’t the birds,
+content, who soared high but dove steep
+Instead, a sky message.
+Recorded.
+And sent to the deep.
+
+Fast forward many years,
+decades, centuries.
+Ever so slowly, above filled.
+Lights and screens, grass and trees.
+
+The boy doesn’t know,
+morning lit by progress’ flame,
+that the city’s final victim,
+the sky, is a sky only in name.
+
+The girl doesn’t know,
+her hand brushing green grass,
+that there’s a boy, far below,
+who looks up and sees glass.
+            </pre>
+            <!-- Scrollable content goes here -->
+        </div>
+    </div>
+</div>
+
 <script>
-    // Example of inline JavaScript - change menu item background color on click
-    document.querySelectorAll('.menu-item').forEach(item => {
+
+    fetch('test.json')
+    .then(response => {
+        // Check if the request was successful
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json(); // Parse the JSON from the response
+    })
+    .then(data => {
+        // Here you can use the `data` object which is the JSON content
+        console.log(data);
+        // You can process your data here
+    })
+    .catch(error => {
+        // If there's an error with the fetch operation or parsing JSON, it ends up here
+        console.error('There was a problem fetching the test.json file:', error);
+    });
+    
+    document.addEventListener('click', () => {
+        document.querySelectorAll('.dropdown.complete').forEach(item => {item.style.backgroundColor = '#FFFFFF';});
+        document.getElementById('overlay').style.display = 'none';
+    });
+
+    document.querySelectorAll('.dropdown.complete').forEach(item => {
         item.addEventListener('click', () => {
-            // Remove active class from all items
-            document.querySelectorAll('.menu-item').forEach(i => i.style.backgroundColor = '#f0f0f0');
             // Add active class to clicked item
-            item.style.backgroundColor = '#ddd';
+            let liContent = item.querySelector('li').textContent;
+
+            // Display the overlay
+            document.getElementById('overlay').style.display = 'block';
+
+            // Set the title's innerHTML to the content of the li within the clicked .dropdown.complete
+            document.getElementById('title').innerHTML = liContent;
+            event.stopPropagation();
         });
     });
+
 </script>
 
 </body>
