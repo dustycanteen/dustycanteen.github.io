@@ -114,66 +114,35 @@
         margin-top: 40px;
     }
 
+    .prototype {
+        display: none;
+    }
+
+    .poem {
+        white-space: pre-wrap; /* Preserves formatting and allows wrapping */
+    }
+
+    .prose {
+        white-space: pre-wrap; /* Allows text to wrap */
+        word-wrap: break-word; /* Ensures long words do not overflow */
+        max-width: 100%; /* Adjust as necessary to fit your layout */
+        text-align:left;
+    }
+
+    .contact {
+        white-space: pre-wrap;
+        text-align: center;
+    }
+
 </style>
 </head>
 <body>
 
 <ul class="menu">
-    <li class="menu-item nohighlight">
-        <ul class="label">
-            <li>Code</li>
-        </ul>
-        <ul class="dropdown wip repo">
-            <li>Continuing Eduction</li>
-        </ul>
+    <li class="menu-item nohighlight prototype">
+        <ul class="label"><li></li></ul>
+        <ul class="dropdown prototype"><li></li></ul>
     </li>
-    <li class="menu-item nohighlight">
-        <ul class="label">
-            <li>Poetry</li>
-        </ul>
-        <ul class="dropdown complete">
-            <li>Garden in the Clouds</li>
-        </ul>
-        <ul class="dropdown complete">
-            <li>The Chimney</li>
-        </ul>
-    </li>
-    <li class="menu-item nohighlight">
-        <ul class="label">
-            <li>Stories</li>
-        </ul>
-        <ul class="dropdown complete flash-fiction">
-            <li>Decay</li>
-        </ul>
-        <ul class="dropdown wip short-story">
-            <li>A Lesson in Materials Science</li>
-        </ul>
-    </li>
-    <li class="menu-item nohighlight">
-        <ul class="label">
-            <li>Games</li>
-        </ul>
-        <ul class="dropdown wip project">
-            <li>
-                Cubeworld RTS
-            </li>
-        </ul>
-    </li>
-    <li class="menu-item nohighlight">
-        <ul class="label">
-            <li>Contact</li>
-        </ul>
-        <ul class="dropdown contact">
-            <li>Ruy Calderon</li>
-        </ul>
-        <ul class="dropdown contact">
-            <li>ruy.calderon@gmail.com</li>
-        </ul>
-        <ul class="dropdown contact">
-            <li>dustycanteen@gmail.com</li>
-        </ul>
-    </li>
-</ul>
 
 <div id='overlay' class="panel-overlay">
     <div class="panel-content">
@@ -193,9 +162,41 @@
     .then(data => {
         // Here you can use the `data` object which is the JSON content
         console.log(data);
+        menu = document.querySelector(".menu");
+        prototype = document.querySelector(".menu-item.prototype");
+        data.menu.forEach(category => {
+            const next_category = prototype.cloneNode(true);
+            next_category.classList.remove("prototype");
+            next_category.querySelector(".label li").textContent = category.label;
+            let item_prototype = next_category.querySelector(".dropdown.prototype");
+            category.items.forEach(item =>{
+                const next_item = item_prototype.cloneNode(true);
+                next_item.classList.remove("prototype");
+                next_item.classList.add(item.type);
+                next_item.querySelector("li").textContent = item.name;
+                next_item.addEventListener('click', (event) => {
+                    // Display the overlay
+                    let overlay = document.getElementById('overlay');
+                    overlay.style.display = 'block';
+                    overlay.querySelector("div.panel-content div#title").textContent = item.name;
+                    overlay.querySelector("div.panel-content div.content-area").innerHTML = "";
 
+                    let formattedTextElement = document.createElement("p");
+                    formattedTextElement.classList.add(item.type);
+                    formattedTextElement.textContent = item.content;
+                    overlay.querySelector("div.panel-content div.content-area").appendChild(formattedTextElement);
+                    
+                    event.stopPropagation();
+                });
+                next_category.appendChild(next_item);
+            });
+            menu.appendChild(next_category);
+        });
 
-
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.dropdown.complete').forEach(item => {item.style.backgroundColor = '#FFFFFF';});
+            document.getElementById('overlay').style.display = 'none';
+        });
 
 
         return data;
@@ -204,26 +205,6 @@
     .catch(error => {
         // If there's an error with the fetch operation or parsing JSON, it ends up here
         console.error("There was a problem fetching the test.json file:", error);
-    });
-
-
-    document.addEventListener('click', () => {
-        document.querySelectorAll('.dropdown.complete').forEach(item => {item.style.backgroundColor = '#FFFFFF';});
-        document.getElementById('overlay').style.display = 'none';
-    });
-
-    document.querySelectorAll('.dropdown.complete').forEach(item => {
-        item.addEventListener('click', () => {
-            // Add active class to clicked item
-            let liContent = item.querySelector('li').textContent;
-
-            // Display the overlay
-            document.getElementById('overlay').style.display = 'block';
-
-            // Set the title's innerHTML to the content of the li within the clicked .dropdown.complete
-            document.getElementById('title').innerHTML = liContent;
-            event.stopPropagation();
-        });
     });
 
 </script>
