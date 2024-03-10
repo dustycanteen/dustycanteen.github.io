@@ -56,6 +56,19 @@
         font-size: 0; /* Start with a font size of 0 */
         transition: visibility 1.5s, opacity 1.5s ease, font-size 1.5s ease;
         transition-delay: 0s, 0s, 0s; /* Apply no delay to start transitions immediately */
+        list-style-type: none;
+        font-weight: normal;
+    }
+
+    .dropdown:hover {
+         /* Use visibility and opacity for the transition instead of display */
+        visibility: hidden; /* Hide the dropdown */
+        opacity: 0; /* Make the dropdown fully transparent */
+        font-size: 0; /* Start with a font size of 0 */
+        transition: visibility 1.5s, opacity 1.5s ease, font-size 1.5s ease;
+        transition-delay: 0s, 0s, 0s; /* Apply no delay to start transitions immediately */
+        list-style-type: none;
+        font-weight: bold;
     }
 
     .menu-item:hover .dropdown{
@@ -196,6 +209,10 @@
         document.addEventListener('click', () => {
             document.querySelectorAll('.dropdown.complete').forEach(item => {item.style.backgroundColor = '#FFFFFF';});
             document.getElementById('overlay').style.display = 'none';
+        });
+
+        document.getElementById('overlay').addEventListener('click', (event) => {
+            event.stopPropagation(); //allow clicking inside of content area
         });
 
 
