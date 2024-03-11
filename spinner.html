@@ -34,10 +34,10 @@
         
 
         const button = {
-            x: 50,
-            y: 50,
-            width: 200,
-            height: 100,
+            x: 25,
+            y: 25,
+            width: 150,
+            height: 75,
             text: 'Spin!'
         };
 
@@ -52,7 +52,7 @@
             let currentY = y_start;
             let x_step = (x_end - x_start) / l.length; 
             let y_step = (y_end - y_start) / l.length; 
-            ctx.font = `40px Arial`;
+            ctx.font = `30px Arial`;
             
             // Draw each word in the list
             for(let i = 0; i < max; ++i){
@@ -71,7 +71,7 @@
                 ctx.fill();
                 ctx.stroke();
                 ctx.fillStyle = 'black'; // Text color
-                ctx.fillText(word, currentX + 5, currentY + 40); // Adjust text position as needed
+                ctx.fillText(word, currentX + 5, currentY + 30); // Adjust text position as needed
                 currentX += x_step; // Move to the next row
                 currentY += y_step; // Move to the next row
             }
