@@ -142,6 +142,18 @@
         text-align:left;
     }
 
+    .url {
+        text-decoration: none; /* Removes the underline from the link */
+        color: #007BFF; /* Sets the initial color of the link */
+        font-weight: bold; /* Makes the link text bold */
+        transition: color 0.3s ease; /* Smooth transition for color change */
+    }
+
+    .url:hover, .url:focus {
+        color: #0056b3; /* Darker shade of blue for hover/focus state */
+        text-decoration: underline; /* Adds underline on hover/focus for emphasis */
+    }
+
     .contact {
         white-space: pre-wrap;
         text-align: center;
@@ -165,6 +177,43 @@
 </div>
 
 <script>
+    function parseItemContent(item){
+        switch(item.content_type){
+            case "text":{
+                let formattedTextElement = document.createElement("p");
+                formattedTextElement.classList.add(item.type);
+                formattedTextElement.textContent = item.content;
+
+                return formattedTextElement;
+            }break;
+            case "url":{
+                let urlElement = document.createElement("a");
+                urlElement.href = item.url;
+                urlElement.textContent = item.url_text;
+                urlElement.classList.add(item.type);
+
+                return urlElement
+            }break;
+            case "complex":{
+                let content_list = item.content;
+                let complexElement = document.createElement("div");
+                complexElement.classList.add(item.type);
+
+                item.content.forEach(field => {
+                    let panelElement = parseItemContent(field);
+                    complexElement.appendChild(panelElement);
+                });
+                return complexElement;
+            }break;
+            default:{
+                let notImplementedElement = document.createElement("p");
+                notImplementedElement.textContent = `${item.content_type} content type not implmented.`;
+
+                return notImplementedElement;
+            }
+        }
+    }
+
     let site_content = fetch('test.json').then(response => {
         // Check if the request was successful
         if (!response.ok) {
@@ -192,13 +241,13 @@
                     let overlay = document.getElementById('overlay');
                     overlay.style.display = 'block';
                     overlay.querySelector("div.panel-content div#title").textContent = item.name;
-                    overlay.querySelector("div.panel-content div.content-area").innerHTML = "";
-
-                    let formattedTextElement = document.createElement("p");
-                    formattedTextElement.classList.add(item.type);
-                    formattedTextElement.textContent = item.content;
-                    overlay.querySelector("div.panel-content div.content-area").appendChild(formattedTextElement);
                     
+                    let parent_element = overlay.querySelector("div.panel-content div.content-area");
+                    parent_element.innerHTML = "";
+
+                    let child_element = parseItemContent(item, parent_element);
+                    parent_element.appendChild(child_element);
+
                     event.stopPropagation();
                 });
                 next_category.appendChild(next_item);
@@ -211,7 +260,7 @@
             document.getElementById('overlay').style.display = 'none';
         });
 
-        document.getElementById('overlay').addEventListener('click', (event) => {
+        document.querySelector('#overlay .content-area').addEventListener('click', (event) => {
             event.stopPropagation(); //allow clicking inside of content area
         });
 
@@ -225,6 +274,5 @@
     });
 
 </script>
-
 </body>
 </html>
